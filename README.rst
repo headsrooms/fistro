@@ -4,7 +4,10 @@ Fistro
 .. image:: https://img.shields.io/pypi/v/fistro.svg
     :target: https://pypi.org/project/fistro/
 
-.. image:: https://circleci.com/gh/kingoodie/fistro.svg?style=svg
+.. image:: https://img.shields.io/pypi/pyversions/fistro.svg
+    :target: https://pypi.org/project/fistro/
+
+.. image:: https://img.shields.io/circleci/project/github/kingoodie/fistro.svg
     :target: https://circleci.com/gh/kingoodie/fistro
 
 A fixture generator based on type annotations.
