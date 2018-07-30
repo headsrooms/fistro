@@ -6,22 +6,23 @@ A fixture generator based on type annotations.
 Examples
 --------
 
->>>from datetime import datetime
+>>> from datetime import datetime
 >>>
->>>from fistro.fistro import generate
->>>from fistro.generators import date_generator
->>>
->>>
->>>class TestClassWithYDefault:
->>>    x: int
->>>    y: str = 'default'
->>>    z: str = str(date_generator())
->>>    w: datetime
->>>    o: str
+>>> from fistro.fistro import generate
+>>> from fistro.generators import date_generator
 >>>
 >>>
->>>generated = generate(TestClassWithYDefault)()
->>>print(generated)
+>>> class TestClassWithYDefault:
+>>>     x: int
+>>>     y: str = 'default'
+>>>     z: str = str(date_generator())
+>>>     w: datetime
+>>>     o: str
+>>>
+>>>
+>>> generated = generate(TestClassWithYDefault)()
+>>> print(generated)
+
 
 Installation
 ------------
