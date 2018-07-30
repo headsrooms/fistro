@@ -1,6 +1,9 @@
 Fistro
 ======
 
+.. image:: https://circleci.com/gh/kingoodie/fistro.svg?style=svg
+    :target: https://circleci.com/gh/kingoodie/fistro
+
 A fixture generator based on type annotations.
 
 Examples
