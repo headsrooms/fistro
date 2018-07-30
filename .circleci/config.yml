@@ -49,3 +49,9 @@ jobs:
       - store_artifacts:
           path: test-reports
           destination: test-reports
+
+workflows:
+  version: 2
+  one_and_two:
+    jobs:
+      - build
