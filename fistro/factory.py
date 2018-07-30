@@ -2,8 +2,9 @@ import builtins
 from inspect import signature
 from typing import Type, Callable, List
 
-from fistro.config import supported_types, default_generators
+from fistro.config import supported_types
 from fistro.exceptions import NotSupportedType
+from fistro.generators import default_generators
 
 
 def builtin_types() -> List:

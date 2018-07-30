@@ -3,6 +3,26 @@ Fistro
 
 A fixture generator based on type annotations.
 
+Examples
+--------
+
+>>>from datetime import datetime
+>>>
+>>>from fistro.fistro import generate
+>>>from fistro.generators import date_generator
+>>>
+>>>
+>>>class TestClassWithYDefault:
+>>>    x: int
+>>>    y: str = 'default'
+>>>    z: str = str(date_generator())
+>>>    w: datetime
+>>>    o: str
+>>>
+>>>
+>>>generated = generate(TestClassWithYDefault)()
+>>>print(generated)
+
 Installation
 ------------
 
@@ -17,11 +37,6 @@ Another way is with:
 >>> pip install -r requirements.txt
 
 This way dev dependencies won't be installed.
-
-
-Usage
------
-TODO
 
 
 Credits

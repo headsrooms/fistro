@@ -1,12 +1,22 @@
-from datetime import datetime
-from typing import List, Callable
+from datetime import datetime, date
+from typing import List
 
-from fistro.generators import int_generator, str_generator, date_generator
+INT_LENGTH = 9
+STR_LENGTH = 9
+
+MIN_YEAR = 0
+MAX_YEAR = 2200
+MIN_MONTH = 1
+MAX_MONTH = 12
+MIN_DAY = 1
+MAX_DAY = 31
+MIN_HOUR = 0
+MAX_HOUR = 23
+MIN_MINUTE = 0
+MAX_MINUTE = 59
+MIN_SECOND = 1
+MAX_SECOND = 59
 
 
 def supported_types() -> List:
-    return [int, str, datetime]
-
-
-def default_generators() -> List[Callable]:
-    return [int_generator, str_generator, date_generator]
+    return [int, str, datetime, date]

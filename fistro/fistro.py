@@ -37,7 +37,9 @@ def generate(
 
     dataclass = make_dataclass(a_class.__name__, rich_annotations)
     if as_dict:
-        return asdict(dataclass())  # to make asdict parameter must be an instance of dataclass
+        return asdict(
+            dataclass()
+        )  # to make asdict parameter must be an instance of dataclass
     if as_json:
         return json.dumps(asdict(dataclass()))
     return dataclass
