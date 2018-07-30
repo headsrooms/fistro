@@ -43,10 +43,8 @@ def test_simple():
     generated = generate(TestClassWithYDefault)()
     assert generated.y == TestClassWithYDefault.y  # default value provided
     assert (
-        generated.x == int_generator()
+        generated.x != int_generator()
     )  # no default value provided, so it will use the generator
-
-    print(generated)
 
 
 def test_not_supported_type():
@@ -64,7 +62,7 @@ def test_complete_override_generators():
 
 def test_partial_override_generator():
     override = generate(TestClass, generators=[override_str_generator])()
-    assert override.x == int_generator()
+    assert override.x != int_generator()
     assert override.y == override_str_generator()
 
 
@@ -78,13 +76,13 @@ def test_is_dataclass():
 
 def test_as_dict():
     dataclass_dict = generate(
-        TestClass, generators=[override_str_generator], as_dict=True
+        TestClass, generators=[override_int_generator, override_str_generator], as_dict=True
     )
-    assert dataclass_dict == {'x': 5, 'y': 'override'}
+    assert dataclass_dict == {'x': 23, 'y': 'override'}
 
 
 def test_as_json():
     dataclass_json = generate(
-        TestClass, generators=[override_str_generator], as_json=True
+        TestClass, generators=[override_int_generator, override_str_generator], as_json=True
     )
-    assert dataclass_json == json.dumps({'x': 5, 'y': 'override'})
+    assert dataclass_json == json.dumps({'x': 23, 'y': 'override'})
