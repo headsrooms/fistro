@@ -1,6 +1,6 @@
 import string
 from datetime import datetime, date
-from random import randint, sample
+from random import randint, sample, choices
 from typing import Dict, Optional, Callable, List
 
 from fistro.config import (
@@ -30,7 +30,7 @@ def int_generator(length: int = INT_LENGTH) -> int:
 
 
 def str_generator(population: str = string.printable, length: int = STR_LENGTH) -> str:
-    return ''.join(sample(population, length))
+    return ''.join(choices(population, k=length))
 
 
 def datetime_generator(rand_date: Optional[Dict[str, int]] = {}) -> datetime:
