@@ -1,6 +1,9 @@
 Fistro
 ======
 
+.. image:: https://img.shields.io/pypi/v/fistro.svg
+    :target: https://pypi.org/project/fistro/
+
 .. image:: https://circleci.com/gh/kingoodie/fistro.svg?style=svg
     :target: https://circleci.com/gh/kingoodie/fistro
 
