@@ -37,6 +37,7 @@ jobs:
           coverage run -m pytest
           coverage report
           coverage html
+          codecov
 
     - store_artifacts:
         path: test-reports
