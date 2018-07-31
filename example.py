@@ -4,10 +4,11 @@ from fistro.fistro import generate
 
 
 class Employee:
-    id: str
+    id: int
     name: str = 'Carlos Sánchez'
     birthday: date
     last_access: datetime
+    password: str
 
 
 employee = generate(Employee)()
