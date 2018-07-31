@@ -1,6 +1,6 @@
 import json
 from dataclasses import make_dataclass, field, asdict, fields, MISSING
-from typing import Optional, List, Callable, Any, Tuple
+from typing import Optional, List, Callable, Any, Union, Dict, Tuple
 
 from fistro.factory import Factory
 
@@ -39,3 +39,36 @@ def enrich_fields(a_class, generators) -> List[Tuple[str, type, field]]:
         )
         for a_field in fields(a_class)
     ]
+
+
+def generate_from_json(object: Union[Dict[str, Any], List]):
+    if isinstance(object, dict):
+        print({key: inner_inspection(value) for key, value in object.items()})
+    elif isinstance(object, list):  # list
+        print([inner_inspection(value) for value in object])
+
+
+def inner_inspection(inner_object: Any):
+    if isinstance(inner_object, list):
+        for value in inner_object:
+            if isinstance(value, list):
+                # return [type(inner_value) for inner_value in value]
+                return [inner_inspection(inner_value) for inner_value in value]
+            elif isinstance(value, dict):
+                # return {inner_key: type(inner_value) for inner_key, inner_value in value.items()}
+                return {
+                    inner_key: inner_inspection(inner_value)
+                    for inner_key, inner_value in value.items()
+                }
+        return [type(value) for value in inner_object]
+    elif isinstance(inner_object, dict):
+        for value in inner_object:
+            if isinstance(value, list):
+                return [inner_inspection(inner_value) for inner_value in value]
+            elif isinstance(value, dict):
+                return {
+                    inner_key: inner_inspection(inner_value)
+                    for inner_key, inner_value in value.items()
+                }
+    else:
+        return type(inner_object)
