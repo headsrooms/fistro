@@ -1,6 +1,6 @@
 import string
 from datetime import datetime, date
-from random import randint, sample, choices
+from random import randint, choices
 from typing import Dict, Optional, Callable, List
 
 from fistro.config import (
@@ -33,7 +33,9 @@ def str_generator(population: str = string.printable, length: int = STR_LENGTH) 
     return ''.join(choices(population, k=length))
 
 
-def datetime_generator(rand_date: Optional[Dict[str, int]] = {}) -> datetime:
+def datetime_generator(rand_date: Optional[Dict[str, int]] = None) -> datetime:
+    if not rand_date:
+        rand_date = {}
     min_year = rand_date.get('min_year', MIN_YEAR)
     max_year = rand_date.get('max_year', MAX_YEAR)
     min_month = rand_date.get('min_month', MIN_MONTH)

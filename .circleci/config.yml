@@ -21,6 +21,7 @@ jobs:
           python3 -m venv venv
           . venv/bin/activate
           pip install poetry
+          pip install codecov
           poetry install
 
     - save_cache:
@@ -33,6 +34,7 @@ jobs:
         command: |
           . venv/bin/activate
           pytest
+          codecov
 
     - store_artifacts:
         path: test-reports

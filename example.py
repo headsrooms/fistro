@@ -1,16 +1,14 @@
-from datetime import datetime
+from datetime import datetime, date
 
 from fistro.fistro import generate
-from fistro.generators import date_generator
 
 
-class TestClassWithYDefault:
-    x: int
-    y: str = 'default'
-    z: str = str(date_generator())
-    w: datetime
-    o: str
+class Employee:
+    id: str
+    name: str = 'Carlos Sánchez'
+    birthday: date
+    last_access: datetime
 
 
-generated = generate(TestClassWithYDefault)()
-print(generated)
+employee = generate(Employee)()
+print(employee)

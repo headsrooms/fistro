@@ -16,7 +16,7 @@ def builtin_types() -> List:
 
 
 class Factory:
-    def __init__(self, generators: List[Callable] = default_generators()):
+    def __init__(self, generators: List[Callable] = default_generators()) -> None:
         for generator in generators:
             type_name = signature(generator).return_annotation.__name__
             setattr(self, f'{type_name}_generator', generator)

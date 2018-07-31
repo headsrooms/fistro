@@ -1,6 +1,6 @@
 import json
 from dataclasses import make_dataclass, field, asdict
-from typing import Type, Optional, List, Callable
+from typing import Type, Optional, List, Callable, Any
 
 from fistro.factory import Factory
 
@@ -10,7 +10,7 @@ def generate(
     generators: Optional[List[Callable]] = None,
     as_dict: bool = False,
     as_json: bool = False,
-) -> Type:
+) -> Any:  # really Union[Type[Any], str, Dict[Any, Any]] but mypy is complaining
     annotations = a_class.__annotations__
     defaults = []
 
