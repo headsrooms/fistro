@@ -25,7 +25,7 @@ class Factory:
         if typename in supported_types():
             try:
                 return getattr(self, f'{typename.__name__}_generator')
-            except AttributeError:  # this is to protect against the case of some type generator is not provided
+            except AttributeError:  # this is to protect against the case of any type generator is not provided
                 return getattr(DefaultFactory(), f'{typename.__name__}_generator')
         raise NotSupportedType(f'Type {typename} is not supported')
 
