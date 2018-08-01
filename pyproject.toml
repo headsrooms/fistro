@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "fistro"
 version = "0.1.1"
-description-file = "A fixture generator based on type annotations."
+description = "A fixture generator based on type annotations."
 readme = "README.rst"
 authors = ["Pablo Cabezas <pabcabsal@gmail.com>"]
 repository = "https://github.com/kingoodie/fistro"
