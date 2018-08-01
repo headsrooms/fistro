@@ -1,5 +1,5 @@
 import json
-from dataclasses import is_dataclass
+from dataclasses import is_dataclass, dataclass
 from datetime import datetime
 
 import pytest
@@ -10,21 +10,24 @@ from fistro.fistro import generate
 from fistro.generators import int_generator
 
 
-class TestClass:
+@dataclass
+class AClass:
     x: int
     y: str
 
 
-class TestClassWithNoSupportedType:
+@dataclass
+class ClassWithNoSupportedType:
     x: int
     y: str
     z: float
 
 
-class TestClassWithYDefault:
+@dataclass
+class ClassWithYDefault:
     x: int
-    y: str = 'default'
     z: datetime
+    y: str = 'default'
 
 
 def override_str_generator() -> str:
@@ -40,8 +43,8 @@ def test_version():
 
 
 def test_simple():
-    generated = generate(TestClassWithYDefault)()
-    assert generated.y == TestClassWithYDefault.y  # default value provided
+    generated = generate(ClassWithYDefault)()
+    assert generated.y == ClassWithYDefault.y  # default value provided
     assert (
         generated.x != int_generator()
     )  # no default value provided, so it will use the generator
@@ -49,26 +52,26 @@ def test_simple():
 
 def test_not_supported_type():
     with pytest.raises(NotSupportedType):
-        generate(TestClassWithNoSupportedType)()
+        generate(ClassWithNoSupportedType)()
 
 
 def test_complete_override_generators():
     override = generate(
-        TestClass, generators=[override_int_generator, override_str_generator]
+        AClass, generators=[override_int_generator, override_str_generator]
     )()
     assert override.x == override_int_generator()
     assert override.y == override_str_generator()
 
 
 def test_partial_override_generator():
-    override = generate(TestClass, generators=[override_str_generator])()
+    override = generate(AClass, generators=[override_str_generator])()
     assert override.x != int_generator()
     assert override.y == override_str_generator()
 
 
 def test_is_dataclass():
     dataclass = generate(
-        TestClass, generators=[override_int_generator, override_str_generator]
+        AClass, generators=[override_int_generator, override_str_generator]
     )()
 
     assert is_dataclass(dataclass)
@@ -76,13 +79,13 @@ def test_is_dataclass():
 
 def test_as_dict():
     dataclass_dict = generate(
-        TestClass, generators=[override_int_generator, override_str_generator], as_dict=True
+        AClass, generators=[override_int_generator, override_str_generator], as_dict=True
     )
     assert dataclass_dict == {'x': 23, 'y': 'override'}
 
 
 def test_as_json():
     dataclass_json = generate(
-        TestClass, generators=[override_int_generator, override_str_generator], as_json=True
+        AClass, generators=[override_int_generator, override_str_generator], as_json=True
     )
     assert dataclass_json == json.dumps({'x': 23, 'y': 'override'})
