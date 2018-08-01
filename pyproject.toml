@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "fistro"
-version = "0.1.0"
-description-file = "README.rst"
+version = "0.1.1"
+description-file = "A fixture generator based on type annotations."
+readme = "README.rst"
 authors = ["Pablo Cabezas <pabcabsal@gmail.com>"]
-classifiers = ["Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3",
-    "Topic :: Software Development :: Libraries :: Python Modules",
-]
+repository = "https://github.com/kingoodie/fistro"
+homepage = "https://github.com/kingoodie/fistro"
+license = "MIT"
+keywords = ["fixture", "testing", "tool", "dataclasses", "annotations"]
 
 [tool.poetry.dependencies]
 python = "3.7.*"
