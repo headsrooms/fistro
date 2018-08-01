@@ -1,8 +1,11 @@
 import json
+import string
 from dataclasses import make_dataclass, field, asdict, fields, MISSING
 from typing import Optional, List, Callable, Any, Union, Dict, Tuple
+from uuid import uuid4
 
 from fistro.factory import Factory
+from fistro.generators import str_generator
 
 
 def generate(
@@ -41,34 +44,45 @@ def enrich_fields(a_class, generators) -> List[Tuple[str, type, field]]:
     ]
 
 
+def valid_id() -> str:
+    return str_generator(population=string.ascii_lowercase)
+
+
 def generate_from_json(object: Union[Dict[str, Any], List]):
     if isinstance(object, dict):
-        print({key: inner_inspection(value) for key, value in object.items()})
+        return make_dataclass(
+            valid_id(),
+            [(key, inner_inspection(value)) for key, value in object.items()],
+        )
     elif isinstance(object, list):
-        print([inner_inspection(value) for value in object])
+        inner_type = inner_inspection(object[0])
+        return generate(make_dataclass(valid_id(), [(valid_id(), List[inner_type])]))
 
 
 def inner_inspection(inner_object: Any):
-    if isinstance(inner_object, list):
+    if isinstance(inner_object, dict):
         for value in inner_object:
             if isinstance(value, list):
-                # return [type(inner_value) for inner_value in value]
                 return [inner_inspection(inner_value) for inner_value in value]
             elif isinstance(value, dict):
-                # return {inner_key: type(inner_value) for inner_key, inner_value in value.items()}
                 return {
                     inner_key: inner_inspection(inner_value)
                     for inner_key, inner_value in value.items()
                 }
+    elif isinstance(inner_object, list):
+        for value in inner_object:
+            if isinstance(value, list):
+                return make_dataclass(
+                    str(uuid4()),
+                    [(List[inner_inspection(inner_value)]) for inner_value in value],
+                )
+            elif isinstance(value, dict):
+                return make_dataclass(
+                    str(uuid4()),
+                    [
+                        inner_inspection(inner_value)
+                        for inner_key, inner_value in value.items()
+                    ],
+                )
         return [type(value) for value in inner_object]
-    elif isinstance(inner_object, dict):
-        for value in inner_object:
-            if isinstance(value, list):
-                return [inner_inspection(inner_value) for inner_value in value]
-            elif isinstance(value, dict):
-                return {
-                    inner_key: inner_inspection(inner_value)
-                    for inner_key, inner_value in value.items()
-                }
-    else:
-        return type(inner_object)
+    return type(inner_object)

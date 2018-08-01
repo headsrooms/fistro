@@ -1,8 +1,10 @@
 from datetime import datetime, date
-from typing import FrozenSet
+from typing import FrozenSet, List
 
 INT_LENGTH = 9
 STR_LENGTH = 9
+
+INT_LIST_LENGTH = 5
 
 MIN_YEAR = 0
 MAX_YEAR = 2200
@@ -19,4 +21,4 @@ MAX_SECOND = 59
 
 
 def supported_types() -> FrozenSet:
-    return frozenset([int, str, datetime, date])
+    return frozenset([int, str, datetime, date, List[int]])
