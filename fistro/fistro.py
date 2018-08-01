@@ -44,7 +44,7 @@ def enrich_fields(a_class, generators) -> List[Tuple[str, type, field]]:
 def generate_from_json(object: Union[Dict[str, Any], List]):
     if isinstance(object, dict):
         print({key: inner_inspection(value) for key, value in object.items()})
-    elif isinstance(object, list):  # list
+    elif isinstance(object, list):
         print([inner_inspection(value) for value in object])
 
 
