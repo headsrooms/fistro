@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "fistro"
 version = "0.1.0"
-description = ""
+description-file = "README.rst"
 authors = ["Pablo Cabezas <pabcabsal@gmail.com>"]
 
 [tool.poetry.dependencies]
