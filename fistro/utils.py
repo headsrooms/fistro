@@ -1,16 +1,24 @@
 import string
+from contextlib import suppress
 from dataclasses import make_dataclass
 from typing import Type, Any, List, Tuple, Optional
 
 from fistro.generators import str_generator
 
 
+
 def is_list(type: Any) -> bool:
-    return type._name == 'List' or type is list
+    try:
+        return type._name == 'List' or type is list
+    except AttributeError:
+        return False
 
 
 def is_dict(type: Any) -> bool:
-    return type is dict or type._name == 'Dict'
+    try:
+        return type is dict or type._name == 'Dict'
+    except AttributeError:
+        return False
 
 
 def get_base_type(type: Any) -> Type:
