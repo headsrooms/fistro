@@ -86,6 +86,14 @@ def int_list_generator(
     return [randint(0, 9 * 10 ** int_length) for n in range(list_length)]
 
 
+def int_dict_generator(
+    dict_length: int = INT_LIST_LENGTH, int_length: int = INT_LENGTH
+) -> Dict[str, int]:
+    return {
+        str_generator(): randint(0, 9 * 10 ** int_length) for n in range(dict_length)
+    }
+
+
 def default_generators() -> List[Callable]:
     return [
         int_generator,
@@ -93,4 +101,5 @@ def default_generators() -> List[Callable]:
         datetime_generator,
         date_generator,
         int_list_generator,
+        int_dict_generator,
     ]

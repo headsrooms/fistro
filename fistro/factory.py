@@ -5,7 +5,7 @@ from typing import Type, Callable, List
 from fistro.config import supported_types
 from fistro.exceptions import NotSupportedType
 from fistro.generators import default_generators
-from fistro.utils import is_list, get_base_type
+from fistro.utils import is_list, get_base_type, is_dict
 
 
 def builtin_types() -> List:
@@ -23,7 +23,13 @@ class Factory:
                 type_name = signature(generator).return_annotation.__name__
                 setattr(self, f'{type_name}_generator', generator)
             except AttributeError:
-                if is_list(signature(generator).return_annotation):
+                if is_dict(signature(generator).return_annotation):
+                    setattr(
+                        self,
+                        f'{get_base_type(signature(generator).return_annotation)}_dict_generator',
+                        generator,
+                    )
+                elif is_list(signature(generator).return_annotation):
                     setattr(
                         self,
                         f'{get_base_type(signature(generator).return_annotation)}_list_generator',
@@ -35,7 +41,9 @@ class Factory:
             try:
                 return getattr(self, f'{typename.__name__}_generator')
             except AttributeError:  # this is to protect against the case of any type generator is not provided or is a complex type: List...
-                if is_list(typename):
+                if is_dict(typename):
+                    return getattr(self, f'{get_base_type(typename)}_dict_generator')
+                elif is_list(typename):
                     return getattr(self, f'{get_base_type(typename)}_list_generator')
                 return getattr(DefaultFactory(), f'{typename.__name__}_generator')
         raise NotSupportedType(f'Type {typename} is not supported')

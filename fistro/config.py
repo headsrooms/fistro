@@ -1,5 +1,5 @@
 from datetime import datetime, date
-from typing import FrozenSet, List
+from typing import FrozenSet, List, Dict
 
 INT_LENGTH = 9
 STR_LENGTH = 9
@@ -21,4 +21,4 @@ MAX_SECOND = 59
 
 
 def supported_types() -> FrozenSet:
-    return frozenset([int, str, datetime, date, List[int]])
+    return frozenset([int, str, datetime, date, List[int], Dict[str, int], dict])
