@@ -18,12 +18,12 @@ from fistro.config import (
     MAX_SECOND,
     STR_LENGTH,
     INT_LENGTH,
+    INT_LIST_LENGTH,
 )
 
 
 # Name is not important, the important thing is the return type
 # if this one is repeated generator will be override
-
 
 def int_generator(length: int = INT_LENGTH) -> int:
     return randint(0, 9 * 10 ** length)
@@ -79,5 +79,26 @@ def date_generator(rand_date: Optional[Dict[str, int]] = None) -> date:
     return datetime.strptime(str(the_date), '%Y-%m-%d').date()
 
 
+def int_list_generator(
+    list_length: int = INT_LIST_LENGTH, int_length: int = INT_LENGTH
+) -> List[int]:
+    return [randint(0, 9 * 10 ** int_length) for n in range(list_length)]
+
+
+def int_dict_generator(
+    dict_length: int = INT_LIST_LENGTH, int_length: int = INT_LENGTH
+) -> Dict[str, int]:
+    return {
+        str_generator(): randint(0, 9 * 10 ** int_length) for n in range(dict_length)
+    }
+
+
 def default_generators() -> List[Callable]:
-    return [int_generator, str_generator, datetime_generator, date_generator]
+    return [
+        int_generator,
+        str_generator,
+        datetime_generator,
+        date_generator,
+        int_list_generator,
+        int_dict_generator,
+    ]
