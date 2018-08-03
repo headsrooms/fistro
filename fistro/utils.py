@@ -1,10 +1,9 @@
 import string
-from contextlib import suppress
 from dataclasses import make_dataclass
-from typing import Type, Any, List, Tuple, Optional
+from inspect import signature
+from typing import Type, Any, List, Tuple, Optional, Callable
 
 from fistro.generators import str_generator
-
 
 
 def is_list(type: Any) -> bool:
@@ -21,12 +20,6 @@ def is_dict(type: Any) -> bool:
         return False
 
 
-def get_base_type(type: Any) -> Type:
-    if is_dict(type):
-        return type.__args__[1]
-    return type.__args__[0]
-
-
 def valid_id() -> str:
     return str_generator(population=string.ascii_lowercase)
 
@@ -36,3 +29,28 @@ def spawn_class(class_name: str, fields: List[Tuple[Any, Any, Optional[Any]]]) -
     globals()[class_name] = the_class
 
     return the_class
+
+
+def get_base_type(type: Any) -> Type:
+    if is_dict(type):
+        return type.__args__[1]
+    return type.__args__[0]
+
+
+def get_name(the_type: Type) -> str:
+    return the_type.__qualname__
+
+
+def get_return_type(generator: Callable) -> Type:
+    return signature(generator).return_annotation
+
+
+def get_return_type_name(generator: Callable) -> str:
+    return_type = signature(generator).return_annotation
+    try:
+        return return_type.__qualname__
+    except AttributeError:  # is a complex type: List or Dict
+        if is_dict(return_type):
+            return f'{get_base_type(return_type)}_dict'
+        elif is_list(return_type):
+            return f'{get_base_type(return_type)}_list'

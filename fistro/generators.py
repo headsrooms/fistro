@@ -25,7 +25,6 @@ from fistro.config import (
 # Name is not important, the important thing is the return type
 # if this one is repeated generator will be override
 
-
 def int_generator(length: int = INT_LENGTH) -> int:
     return randint(0, 9 * 10 ** length)
 
