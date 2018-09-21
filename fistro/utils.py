@@ -6,16 +6,16 @@ from typing import Type, Any, List, Tuple, Optional, Callable
 from fistro.generators import str_generator
 
 
-def is_list(type: Any) -> bool:
+def is_list(the_type: Any) -> bool:
     try:
-        return type._name == 'List' or type is list
+        return the_type._name == 'List' or the_type is list or type(the_type) is list
     except AttributeError:
         return False
 
 
-def is_dict(type: Any) -> bool:
+def is_dict(the_type: Any) -> bool:
     try:
-        return type is dict or type._name == 'Dict'
+        return the_type is dict or the_type._name == 'Dict'
     except AttributeError:
         return False
 

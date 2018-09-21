@@ -1,9 +1,10 @@
 import json
 from dataclasses import make_dataclass, field, asdict, fields, MISSING
+from pprint import pprint
 from typing import Optional, List, Callable, Any, Union, Dict, Tuple
 
 from fistro.factory import Factory
-from fistro.utils import valid_id
+from fistro.utils import valid_id, is_dict, is_list, get_base_type, get_name
 
 
 def generate(
@@ -58,10 +59,29 @@ def inner_inspection(inner_object: Any):
         inner_type = Dict[type(a_key), type(a_value)]
 
     elif isinstance(inner_object, list):
-        inner_type = List[type(inner_object[0])]
+        inner_type = List[Any]
+        if len(inner_object):
+            inner_type = List[type(inner_object[0])]
     else:
         inner_type = type(inner_object)
 
     # using default factory we can reuse the field and auto-generate similar objects,
     # with default derived objects would be with this field constant
     return inner_type, field(default_factory=lambda: inner_object)
+
+
+def get_class_body_from_annotations(annotations: Dict[str, type]) -> str:
+    result = ''
+
+    for prop, prop_type in annotations.items():
+
+        if prop_type is not None and not is_dict(prop_type) and not is_list(prop_type):
+            result += f'{prop}: {prop_type.__name__}\n'
+
+        elif is_dict(prop_type) or is_list(prop_type):
+            result += f'{prop}: {prop_type}\n'
+
+        else:
+            result += f'{prop}: Any\n'
+
+    return result

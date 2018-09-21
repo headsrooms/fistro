@@ -1,9 +1,10 @@
-import json
 from dataclasses import dataclass
 from datetime import datetime, date
+from json import loads
 from typing import List
 
-from fistro.fistro import generate, generate_from_json
+from fistro.fistro import generate
+from fistro.fistro import generate_from_json, get_class_body_from_annotations
 
 
 @dataclass
@@ -19,59 +20,50 @@ class Employee:
 employee = generate(Employee)()
 print(employee)
 
-big_object = """{"specificRisks": [
-        {
-            "id": "5b16e8d09",
-            "version": 2,
-            "country": "ES",
-            "company": "8755",
-            "zone": "DFGE",
-            "internalRef": "RSP-BR-0185-DIVDE-231",
-            "creationDate": "2017-12-29T23:00:00.000Z",
-            "title": "Cível: Signalcard",
+specific_str = """{
+            "_id": "5ae09b3947467b00111e7bf6",
+            "localExposure": 0,
+            "answer": "mitigate",
+            "idRisk": "5ae09b3947467b00111e7bf6",
+            "version": 4,
+            "country": "BR",
+            "company": "0185",
+            "currency": "BRL",
+            "zone": "DIRT8",
+            "internalRef": "RSP-BR-0185-DIRT8-105",
+            "creationDate": "2017-12-13T23:00:00.000Z",
+            "title": "Tributário: Contribuições Previdenciárias sobre Plano de Stock Options",
             "riskCategory": {
-                "en": "TV rights",
-                "es": "Derechos TV"
+                "es": "22. Contingencias tributarias",
+                "en": "22. Tax contingencies",
+                "pt": "22. Contingências Fiscais"
             },
-            "evaluationType": "qualitative",
-            "localQUALITATIVEFinalNet": 52360000,
-            "euroQUALITATIVEFinalNet": 12454454.32,
-            "localQUALITATIVEFinalGross": 52360000,
-            "euroQUALITATIVEFinalGross": 12454454.32,
+            "evaluationType": "quantitative",
+            "basicRef": "26376309-2cc2-4a0d-9c6a-373e0a7d9043",
+            "localQUANTITATIVENetCASHFLOW": 0,
+            "euroQUANTITATIVENetCASHFLOW": 0,
+            "localQUANTITATIVEGrossCASHFLOW": 241000000,
+            "euroQUANTITATIVEGrossCASHFLOW": 57324742,
             "probability": "veryPossible",
             "status": "open",
-            "answer": "mitigate",
+            "commissionApproval": false,
+            "companyRegistry": true,
+            "companyCode": "0185",
+            "IDNotification": "0aa0370e-e6d6-405c-a619-a47da0602dee",
+            "localQUANTITATIVEGrossOIBDA": 241000000,
+            "localQUANTITATIVEGrossCAPEX": 0,
+            "localQUANTITATIVENetOIBDA": 0,
+            "localQUANTITATIVENetCAPEX": 0,
+            "euroQUANTITATIVEGrossOIBDA": 57324742,
+            "euroQUANTITATIVEGrossCAPEX": 0,
+            "euroQUANTITATIVENetOIBDA": 0,
+            "euroQUANTITATIVENetCAPEX": 0,
             "hierarchy": "principal",
             "hierarchySubsidiaries": [],
-            "commissionApproval": true,
-            "companyRegistry": true
-        }
-        ]}"""
+            "owner": "Vasco Gruber"
+        }"""
 
-simple_object = '''{
-    "a":2,
-    "b": "HOLA",
-    "c": 3
- }
-'''
+specific_json = loads(specific_str)
 
-simple_object_with_list = '''{
-    "a":2,
-    "b": [1,2,3,4]
- }
-'''
-object_with_object = '''{
-    "a":2,
-    "b": {"c":1}
- }
-'''
-simple_object = json.loads(simple_object)
-print(generate_from_json(simple_object)())
-simple_object_with_list = json.loads(simple_object_with_list)
-object_with_object = json.loads(object_with_object)
-print(generate_from_json(simple_object_with_list)())
-print(generate(generate_from_json(simple_object_with_list))())
-print(generate(generate_from_json(simple_object_with_list), as_json=True))
-print(generate_from_json(object_with_object)())
-big_object = json.loads(big_object)
-print(generate_from_json(big_object)())
+the_class = generate_from_json(specific_json)
+print(get_class_body_from_annotations(the_class.__annotations__))
