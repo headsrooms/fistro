@@ -21,4 +21,4 @@ MAX_SECOND = 59
 
 
 def supported_types() -> FrozenSet:
-    return frozenset([int, str, datetime, date, List[int], Dict[str, int], dict])
+    return frozenset([int, bool, str, datetime, date, List[int], Dict[str, int], dict])

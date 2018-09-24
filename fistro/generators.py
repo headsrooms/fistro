@@ -1,6 +1,6 @@
 import string
 from datetime import datetime, date
-from random import randint, choices
+from random import randint, choices, choice
 from typing import Dict, Optional, Callable, List
 
 from fistro.config import (
@@ -27,6 +27,10 @@ from fistro.config import (
 
 def int_generator(length: int = INT_LENGTH) -> int:
     return randint(0, 9 * 10 ** length)
+
+
+def bool_generator() -> bool:
+    return choice(True, False)
 
 
 def str_generator(population: str = string.printable, length: int = STR_LENGTH) -> str:
@@ -82,20 +86,21 @@ def date_generator(rand_date: Optional[Dict[str, int]] = None) -> date:
 def int_list_generator(
     list_length: int = INT_LIST_LENGTH, int_length: int = INT_LENGTH
 ) -> List[int]:
-    return [randint(0, 9 * 10 ** int_length) for n in range(list_length)]
+    return [randint(0, 9 * 10 ** int_length) for _ in range(list_length)]
 
 
 def int_dict_generator(
     dict_length: int = INT_LIST_LENGTH, int_length: int = INT_LENGTH
 ) -> Dict[str, int]:
     return {
-        str_generator(): randint(0, 9 * 10 ** int_length) for n in range(dict_length)
+        str_generator(): randint(0, 9 * 10 ** int_length) for _ in range(dict_length)
     }
 
 
 def default_generators() -> List[Callable]:
     return [
         int_generator,
+        bool_generator,
         str_generator,
         datetime_generator,
         date_generator,

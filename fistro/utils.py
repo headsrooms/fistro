@@ -31,10 +31,10 @@ def spawn_class(class_name: str, fields: List[Tuple[Any, Any, Optional[Any]]]) -
     return the_class
 
 
-def get_base_type(type: Any) -> Type:
-    if is_dict(type):
-        return type.__args__[1]
-    return type.__args__[0]
+def get_base_type(the_type: Any) -> Type:
+    if is_dict(the_type):
+        return the_type.__args__[1]
+    return the_type.__args__[0]
 
 
 def get_name(the_type: Type) -> str:

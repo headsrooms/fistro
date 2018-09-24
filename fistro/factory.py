@@ -24,7 +24,10 @@ def builtin_types() -> List:
 
 
 class Factory:
-    def __init__(self, generators: List[Callable] = default_generators()) -> None:
+    def __init__(self, generators: List[Callable] = None) -> None:
+        if not generators:
+            generators = default_generators()
+
         for generator in generators:
             try:
                 type_name = get_return_type_name(generator)
@@ -47,7 +50,9 @@ class Factory:
         if the_type in supported_types():
             try:
                 return getattr(self, f'{get_name(the_type)}_generator')
-            except AttributeError:  # this is to protect against the case of any type generator is not provided or is a complex type: List...
+            except AttributeError:
+                # this is to protect against the case of any type generator is
+                # not provided or is a complex type: List...
                 if is_dict(the_type):
                     return getattr(self, f'{get_base_type(the_type)}_dict_generator')
                 elif is_list(the_type):
