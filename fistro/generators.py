@@ -30,7 +30,7 @@ def int_generator(length: int = INT_LENGTH) -> int:
 
 
 def bool_generator() -> bool:
-    return choice(True, False)
+    return choice([True, False])
 
 
 def str_generator(population: str = string.printable, length: int = STR_LENGTH) -> str:
