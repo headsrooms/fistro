@@ -38,6 +38,11 @@ Examples
 >>> employee = generate(Employee)()
 >>> print(employee)
 
+It will show something like this:
+
+>>> Employee(id=5809893100, birthday=datetime.date(559, 3, 6), last_access=datetime.datetime(1053, 8, 29, 19, 11, 14), password="iFZ>?)V0'", number_plates=[85863115, 3528889142, 2818728907, 6043092538, 4985672707], name='Carlos Sánchez')
+
+
 `generate` function can be called with `to_json` or `to_dict`
 boolean pararameters to return json or dict
 representation respectively:
@@ -55,10 +60,6 @@ representation respectively:
 >>> print(fistro.generate(AreaOfCompany, as_json=True))
 
 >>> {"enable": true, "riskOwner": "h@Ij34u?H", "description": ",R,G%0<y#", "name": "K4.\u000b:lK!}", "code": "fvitVYrk3"}
-
-It will show something like this:
-
->>> Employee(id=5809893100, birthday=datetime.date(559, 3, 6), last_access=datetime.datetime(1053, 8, 29, 19, 11, 14), password="iFZ>?)V0'", number_plates=[85863115, 3528889142, 2818728907, 6043092538, 4985672707], name='Carlos Sánchez')
 
 Another useful functions are `generate_from_json` and `get_class_body_from_annotations`:
 
